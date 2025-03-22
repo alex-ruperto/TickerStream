@@ -11,7 +11,7 @@ public class EnvVarTester implements CommandLineRunner {
 	private String datasourceUrl;
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		System.out.println("Database URL resolved to: " + datasourceUrl);
 	}
 }
