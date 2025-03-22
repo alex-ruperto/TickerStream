@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class TickerStreamApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TickerStreamApplication.class, args);
 	}

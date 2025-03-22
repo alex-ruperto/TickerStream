@@ -1,9 +1,6 @@
 package org.alex.tickerstream.stock;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -12,6 +9,7 @@ import java.io.Serializable;
 @IdClass(StockPK.class) // Using a separate class to represent the composite primary key (ticker_symbol, date)
 public class Stock {
     @Id // Marks as part of the primary key
+    @Column(name = "ticker_symbol")
     private String tickerSymbol;
 
     @Id // Other part of the primary key
@@ -21,41 +19,92 @@ public class Stock {
     private float high;
     private float low;
     private float close;
-    private float adj_close;
+
+    @Column(name = "adj_close")
+    private float adjClose;
+
     private int volume;
+
+    // Empty Constructor
+    public Stock() {
+
+    }
+
+    // Parameterized Constructor
+    public Stock(String tickerSymbol, String date, float open, float high, float low, float close, float adjClose, int volume) {
+        this.tickerSymbol = tickerSymbol;
+        this.date = date;
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+        this.adjClose = adjClose;
+        this.volume = volume;
+    }
+
+    // Getters and Setters
+    public String getTickerSymbol() {
+        return tickerSymbol;
+    }
+
+    public void setTickerSymbol(String tickerSymbol) {
+        this.tickerSymbol = tickerSymbol;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public float getOpen() {
+        return open;
+    }
+
+    public void setOpen(float open) {
+        this.open = open;
+    }
+
+    public float getHigh() {
+        return high;
+    }
+
+    public void setHigh(float high) {
+        this.high = high;
+    }
+
+    public float getLow() {
+        return low;
+    }
+
+    public void setLow(float low) {
+        this.low = low;
+    }
+
+    public float getClose() {
+        return close;
+    }
+
+    public void setClose(float close) {
+        this.close = close;
+    }
+
+    public float getAdjClose() {
+        return adjClose;
+    }
+
+    public void setAdjClose(float adjClose) {
+        this.adjClose= adjClose;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
 }
 
-class StockPK implements Serializable {
-    private String tickerSymbol;
-    private String date;
-
-    // Empty constructor, required by JPA
-    public StockPK() {
-
-    }
-
-    // Equals and hashCode (required)
-
-    /**
-     * Equals Method - required for composite keys
-     * Two StockPK objects are equal if they have the same tickerSymbol and date
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true; // Same object reference
-        if (o == null || getClass() != o.getClass()) return false; // Null or different class check
-        StockPK pk = (StockPK) o;
-        // Compare both fields that make up the primary key
-        return tickerSymbol.equals(pk.tickerSymbol) && date.equals(pk.date);
-    }
-
-    /**
-     * Hashcode Method - required for composite keys
-     * Used when StockPK objects are used in hash-based collections
-     */
-    @Override
-    public int hashCode() {
-        return tickerSymbol.hashCode() + date.hashCode();
-    }
-
-}
